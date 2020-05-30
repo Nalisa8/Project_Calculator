@@ -15,6 +15,7 @@ class Calculator{
     }
 
     delete() {
+        this.current = this.currentOperand.toString().slice(0, -1)
 
     }
 
@@ -63,10 +64,34 @@ class Calculator{
         this.previousOperand = ''
     }
 
-    updateDisplay() {
-        this.currentOperandTextElement.innerText = this.currentOperand
-        this.previousOperandTextElement.innerText = this.previousOperand
 
+    getDispayNumber(number){
+        const stringNumber = number.toString()
+        const integerDigits = parseFloat(stringNumber.split('.')[0])
+        const decimalDigits = stringNumber.split('.')[1]
+        let integerDisplay
+        if(isNaN(integerDigits)){
+            integerDisplay = ''
+        } else {
+            integerDisplay = integerDigits.toLocaleString('en',{
+                maximumFractionDigits:0})
+        }
+        if(decimalDigits !=Null){
+            return `${integerDisplay}.${decimalDigits}`
+        }else{
+            return integerDisplay
+        }
+    }
+
+    updateDisplay() {
+        this.currentOperandTextElement.innerText =
+         this.getDispayNumber(this.currentOperand)
+        if(this.operation != null){
+            this.previousOperandTextElement.innerText =
+            `${this.getDispayNumver(this.previousOperand)}${this.operation}`
+        }else{
+            this.previousOperandTextElement.innerText = ''
+        }
     }
 }
 
@@ -99,5 +124,16 @@ operationButtons.forEach(button => {
 
 equalsButton.addEventListener('click', button =>{
     calculator.compute()
+    calculator.updateDisplay()
+})
+
+
+allClearButton.addEventListener('click', button => {
+    calculator.clear()
+    calculator.updateDisplay()
+})
+
+deleteButton.addEventListener('click', button => {
+    calculator.delete()
     calculator.updateDisplay()
 })
