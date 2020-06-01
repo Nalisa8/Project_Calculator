@@ -15,7 +15,7 @@ class Calculator{
     }
 
     delete() {
-        this.current = this.currentOperand.toString().slice(0, -1)
+        this.currentOperand = this.currentOperand.toString().slice(0, -1)
 
     }
 
@@ -76,7 +76,7 @@ class Calculator{
             integerDisplay = integerDigits.toLocaleString('en',{
                 maximumFractionDigits:0})
         }
-        if(decimalDigits !=Null){
+        if(decimalDigits != null){
             return `${integerDisplay}.${decimalDigits}`
         }else{
             return integerDisplay
